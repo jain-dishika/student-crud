@@ -1,17 +1,14 @@
 <header class="bg-blue-500 p-4 text-white">
     <div class="container mx-auto flex justify-between items-center">
       <div>
-        <a class="font-bold text-xl">Student</a>
+        <a class="font-bold text-xl text-white decoration-transparent">Student</a>
       </div>
       <nav class="space-x-4 font-sans">
-        <a class="hover:text-gray-300 mx-2" (click)="rendering(true)">Login</a>
-        <a class="hover:text-gray-300 mx-2" (click)="rendering(false)">Student Details</a>
+        <a [routerLink]="'/'" routerLinkActive="active" class="hover:text-gray-300 mx-2 text-white decoration-transparent">Register</a>
+        <a [routerLink]="'/UserList'" routerLinkActive="active"class="hover:text-gray-300 mx-2 text-white decoration-transparent">Student Details</a>
       </nav>
     </div>
   </header>
-  @if (renderGlobal) {
-    <app-login (alertMessage)="handleInput($event)" (renderGlobal)="handleInput($event)"></app-login>
-  }
-  @else{
-    <app-student></app-student>
-  }
+  <div>
+    <router-outlet></router-outlet>
+  </div>

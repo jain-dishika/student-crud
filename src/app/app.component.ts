@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { LoginComponent } from './Components/login/login.component';
 import { StudentComponent } from './Components/student/student.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, LoginComponent, StudentComponent],
+  imports: [CommonModule, RouterOutlet, LoginComponent, StudentComponent, RouterModule, RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

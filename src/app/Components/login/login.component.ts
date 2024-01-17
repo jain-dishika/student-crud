@@ -1,45 +1,47 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component, OnInit, Output, EventEmitter, Input,inject } from '@angular/core';
+import {  FormsModule, ReactiveFormsModule, } from '@angular/forms';
+import { DataService } from '../../services/data.service';
+import { FormService } from '../../services/form.service';
+import { RouterLink, Router} from '@angular/router';
+import { ApiService } from '../../services/api.service';
+import { DatePipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { postUser } from '../../redux/user.action';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, RouterLink, DatePipe],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
+  public formService = inject(FormService);
+  public apiService = inject(ApiService);
+  private router = inject(Router);
+  private store = inject(Store);
   showAlert: boolean = false; 
+  user !: any;
+  date !: any;
   @Output() alertMessage : EventEmitter<boolean> = new EventEmitter();
-  @Output() renderGlobal : EventEmitter<boolean> = new EventEmitter();
-  @Output() details : EventEmitter<object> = new EventEmitter();
 
-  studentForm = new FormGroup({
-    name : new FormControl('', Validators.required),
-    email : new FormControl('', [Validators.required, Validators.email]),
-    date : new FormControl('', Validators.required)
-  })
-  ngOnInit(): void {
-      
-  }
+  ngOnInit(): void {   }
+  constructor(private dataService : DataService){ }
   onSubmit(){
-    // if(!this.studentForm.valid) {
-    //   this.showAlert = true;
-    //   this.alertMessage.emit(this.showAlert);
-    // }
-    // else{
-    //   this.renderGlobal.emit(state);
-    // }
-    // console.log(this.studentForm.value);
-  }
-  onButtonClick(state : boolean){
-    if(!this.studentForm.valid) {
+    console.log(this.formService.studentForm.value);
+    if(!this.formService.studentForm.valid) {
       this.showAlert = true;
-      this.alertMessage.emit(this.showAlert);
+      alert("Please fill correct input data");
+      // this.alertMessage.emit(this.showAlert);
     }
     else{
-      this.renderGlobal.emit(state);
-      this.details.emit(this.studentForm)
-    }
+      this.user = this.formService.studentForm.value;
+      this.apiService.createUser(this.user).subscribe(()=>{
+        console.log("this.user", this.user);
+          this.dataService.addData(this.formService.studentForm.value);
+      })
+      // this.store.dispatch(postUser({userInput : this.user}))
+      this.router.navigate(['/UserList']);
+  }
   }
 }

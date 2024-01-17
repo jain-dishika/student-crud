@@ -1,6 +1,5 @@
-
 <div class="w-2/5 mx-auto my-4">
-    <form [formGroup]="studentForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formService.studentForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" (ngSubmit)="onSubmit()">
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
           Name
@@ -8,8 +7,8 @@
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="name" type="text" placeholder="Enter Name" formControlName="name" />
-        @if(studentForm.controls['name'].touched){
-          @if (studentForm.controls['name'].errors?.['required']) {
+        @if(formService.studentForm.controls['name'].touched){
+          @if (formService.studentForm.controls['name'].errors?.['required']) {
             <span class="text-red-600 font-serif text-sm">*This field is required</span>
           }
         }
@@ -22,33 +21,45 @@
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="email" type="email" placeholder="Enter email" formControlName="email"
         />
-        @if(studentForm.controls['email'].touched){
-          @if (studentForm.controls['email'].errors?.['required']) {
+        @if(formService.studentForm.controls['email'].touched){
+          @if (formService.studentForm.controls['email'].errors?.['required']) {
             <span class="text-red-600 font-serif text-sm">*This field is required</span>
           }
-          @else if (studentForm.get('email')?.hasError('email')) {
+          @else if (formService.studentForm.get('email')?.hasError('email')) {
             <span class="text-red-600 font-serif text-sm">*Invalid Email</span>
           }
         }
       </div>
       <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="dob">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="dateOfBirth">
           Date of Birth
         </label>
+        <!-- <div class="input-group">
+          <input
+						id="dateOfBirth"
+						class="form-control shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+						placeholder="yyyy-mm-dd"
+						name="dp"
+						ngbDatepicker
+						#dp="ngbDatepicker"
+					/>
+          <button class="btn shadow bi bi-calendar3 border rounded  text-gray-700" (click)="dp.toggle()" type="button">Press</button>
+        </div> -->
+        
         <input
           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="dob" type="date" value={dob} isClearable formControlName="date"
+          id="dateOfBirth" type="date" isClearable formControlName="dateOfBirth" format="yyyy-mm-dd"
         />
-        @if(studentForm.controls['name'].touched){
-          @if (studentForm.controls['name'].errors?.['required']) {
+        @if(formService.studentForm.controls['name'].touched){
+          @if (formService.studentForm.controls['name'].errors?.['required']) {
             <span class="text-red-600 font-serif text-sm">*This field is required</span>
           }
         }
       </div>
       <div class="flex items-center justify-between">
-        <button
+        <button 
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit" (click)="onButtonClick(false)"
+          type="submit" 
         >
           ADD
         </button>

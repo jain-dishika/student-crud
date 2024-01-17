@@ -1,0 +1,41 @@
+<ng-template #content let-modal>
+    <div class="modal-header">      
+      <h4 class="modal-title" id="modal-basic-title">Update Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="mx-auto my-4">
+        <form class="bg-white rounded">
+          <div class="mb-2">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+              Name
+            </label>
+            <input
+              class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              [value]="dataService.UserList[index].name" id ="name" type="text" placeholder="Enter Name" formControlName="name" />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="email" >
+              Email address
+            </label>
+            <input
+              class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              [value]="dataService.UserList[index].email" id="email" type="email" placeholder="Enter email" formControlName="email"
+            />
+          </div>
+          <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="dob">
+              Date of Birth
+            </label>
+            <input
+              class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              [value]="dataService.UserList[index].date" id="dob" type="date" isClearable formControlName="date"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+</ng-template>
